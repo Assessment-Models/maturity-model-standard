@@ -19,7 +19,13 @@
 # updated; portfolio-report staleness policy for patch versions is now
 # informational ("behind"). DT elevation PR opened; DT stays registered until
 # it merges (per-repo standard_version stays "1.0.0" until each repo bumps).
-version: 1.3.0
+# v1.4.0 (2026-11-14): first AC-24 standard-update cascade completed — DT
+# elevation PR maturity-model-digital-transformation#5 merged; DT is now
+# `structural` at standard v1.0.1 via recorded structure mappings. All 7
+# maturity-model repositories are at `structural` (AC-20 final state). The
+# other 6 stay at declared v1.0.0 (patch-behind, informational per the v1.0.1
+# policy) until they bump in their own reviewed PRs.
+version: 1.4.0
 updated: "2026-11-14"
 standard:
   id: AM-MODEL-REPOSITORY-STANDARD
@@ -47,25 +53,25 @@ repositories:
         docs/assessment-methodology) remain backlog
   - repository: maturity-model-digital-transformation
     classification: maturity-model
-    standard_version: "1.0.0"
-    conformance: registered
+    standard_version: "1.0.1"
+    conformance: structural
     notes: >-
       Second, materially different implementation for AC-28 (composite model;
       CR-AM-11 §31 first-model candidate with a full Level 1/2/3 CI pedigree).
       Adopted at `registered` via maturity-model-digital-transformation#4
       (merged 2026-11-14): VERSION + README Status anchor added, CONTRIBUTING,
       declaration, conformance gate. Composite layout mapped, not restructured
-      (M2); raises to `structural` via recorded structure mappings now that standard
-      v1.0.1 has landed (maturity-model-standard#3); elevation PR opened
-      2026-11-14, DT remains `registered` until it merges.
+      (M2); elevated to `structural` via recorded structure mappings (standard
+      v1.0.1, maturity-model-standard#3) in maturity-model-digital-transformation#5
+      (merged 2026-11-14). First AC-24 standard-update cascade completed.
     phase2:
       assessed: "2026-11-14"
       identity: version-anchor-missing
-      result: anchor gaps closed by adoption PR #4
+      result: anchor gaps closed by adoption PR #4; elevated to structural by PR #5
       gaps_closed: [standard-declaration, repository-standard-gate, version-file, readme-status, contributing]
       structure_mappings: [M2, M3]
       target_conformance: structural
-      blocking: none (amendment landed in standard v1.0.1); elevation PR pending merge
+      achieved: "2026-11-14" (PR #5; recorded model-definition mapping, integrity-checked)
   - repository: maturity-model-digital-transformation-operationalized
     classification: maturity-model
     standard_version: "1.0.0"
