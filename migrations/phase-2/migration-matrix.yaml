@@ -1,0 +1,122 @@
+# Phase 2 migration matrix — machine-readable companion to structure-assessment.md.
+#
+# Standard: AM-MODEL-REPOSITORY-STANDARD v1.0.0 (CR-AM-ORG-RES-000 §8 Phase 2).
+# Gap slugs (additive changes required in Phase 3 adoption PRs):
+#   standard-declaration        root standard.yaml missing
+#   repository-standard-gate    .github/workflows/repository-standard.yml missing
+#   version-file               VERSION file missing
+#   readme-status              README ## Status section missing
+#   readme-status-drift         README Status disagrees with manifest/VERSION
+#   contributing               CONTRIBUTING.md missing
+# Full-level gap slugs (backlog, not required for structural):
+#   docs, docs-diagrams, mappings, docs-provenance, docs-assessment-methodology
+version: 1.0.0
+assessed: "2026-11-14"
+assessed_by: Phase 2 discovery (maturity-model-standard issue #1)
+invariants:
+  - preserve model semantics, identifiers, component imports and scoring anchors verbatim
+  - map established structure; never rename or restructure (repository-standard R1)
+  - adoption is always a repository-specific reviewable pull request
+structure_mappings:
+  M1:
+    applies_to: [digital-transformation-operationalized, technology, operations, modernization, services-delivery]
+    decision: >-
+      Model-owned scales in maturity/scale.yaml are established CR-AM-11 work and are
+      preserved verbatim; the template's canonical-scale-binding pattern applies to new
+      repositories only. The structural requirement is that maturity/scale.yaml exists.
+  M2:
+    applies_to: [digital-transformation]
+    decision: >-
+      The model definition lives in maturity/evaluation.yaml + maturity/components/ (4
+      CR-AM-10 component files) instead of maturity/model/. Map these paths to the
+      "model definition" role; DT adopts at registered until the standard supports
+      recorded structure mappings (v1.0.1 amendment proposal, standard issue #3).
+  M3:
+    applies_to: [digital-transformation]
+    decision: >-
+      scripts/check_immutable_refs.py (Level 3 immutable-reference guard) is the
+      repository's established validator companion; preserved. The template's
+      local_validate.py pattern is for new repositories only.
+  M4:
+    applies_to: [digital-transformation-operationalized]
+    decision: >-
+      The legacy self-named root directory duplicates the whole repository. Retained
+      untouched (R1); flagged as a duplication risk; deduplication deferred to the
+      repository owner and excluded from the adoption PR.
+  M5:
+    applies_to: [technology, operations, modernization, services-delivery, digital-transformation-operationalized]
+    decision: >-
+      README Provenance/Scoring-scheme/CI-levels sections already carry content the
+      documentation standard expects under docs/. At full level, docs/ files must link
+      to those sections, not duplicate them (single source, no second drift surface).
+repositories:
+  - repository: maturity-model-autonomous-operations
+    adopted: true
+    conformance: structural
+    identity: coherent
+    phase3_pr: null
+    notes: >-
+      Reference implementation, adopted 2026-11-14. Full-level gaps are backlog:
+      docs, docs-diagrams, mappings, docs-provenance, docs-assessment-methodology.
+  - repository: maturity-model-digital-transformation
+    adopted: false
+    conformance: registered
+    identity: version-anchor-missing
+    gaps: [standard-declaration, repository-standard-gate, version-file, readme-status, contributing]
+    structure_mappings: [M2, M3]
+    target_conformance: registered
+    phase3_pr_order: 1
+    risk: >-
+      Composite model with CR-AM-10 component imports (import/extend/override) and an
+      OpenDEA EA scoring anchor; all preserved verbatim. Most mature CI pedigree in the
+      portfolio - its Level 1 validator behaviour is a reference, never overwritten.
+      Cannot reach structural before the structure-mappings amendment.
+  - repository: maturity-model-digital-transformation-operationalized
+    adopted: false
+    conformance: registered
+    identity: drift
+    gaps: [standard-declaration, repository-standard-gate, readme-status-drift]
+    structure_mappings: [M1, M4, M5]
+    target_conformance: structural
+    phase3_pr_order: 2
+    risk: >-
+      README Status 1.0.0 vs manifest/VERSION 1.0.1 (drift fix in adoption PR). Legacy
+      self-named duplicate directory retained untouched (M4).
+  - repository: maturity-model-technology
+    adopted: false
+    conformance: registered
+    identity: coherent
+    gaps: [standard-declaration, repository-standard-gate]
+    structure_mappings: [M1, M5]
+    target_conformance: structural
+    phase3_pr_order: 3
+    risk: none-identified
+  - repository: maturity-model-operations
+    adopted: false
+    conformance: registered
+    identity: coherent
+    gaps: [standard-declaration, repository-standard-gate]
+    structure_mappings: [M1, M5]
+    target_conformance: structural
+    phase3_pr_order: 4
+    risk: >-
+      Imports the operations-modernization component (kind: import) from
+      maturity-components; component reference preserved verbatim.
+  - repository: maturity-model-modernization
+    adopted: false
+    conformance: registered
+    identity: coherent
+    gaps: [standard-declaration, repository-standard-gate, contributing]
+    structure_mappings: [M1, M5]
+    target_conformance: structural
+    phase3_pr_order: 5
+    risk: none-identified
+  - repository: maturity-model-services-delivery
+    adopted: false
+    conformance: registered
+    identity: coherent
+    gaps: [standard-declaration, repository-standard-gate, contributing]
+    structure_mappings: [M1, M5]
+    target_conformance: structural
+    phase3_pr_order: 6
+    risk: none-identified

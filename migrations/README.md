@@ -50,3 +50,12 @@ Adopt AM-MODEL-REPOSITORY-STANDARD v1.0.0 (CR-AM-ORG-RES-000)
 - [ ] No renames, no deletions, no model-semantics changes
 - [ ] Portfolio conformance registry updated in Assessment-Models/maturity-model-standard
 ```
+
+## 6. Phase 2 outputs (portfolio discovery, 2026-11-14)
+
+Phase 2 (CR-AM-ORG-RES-000 §8) assessed all 7 `maturity-model` repositories against the structural level before any restructuring:
+
+- [`phase-2/structure-assessment.md`](phase-2/structure-assessment.md) — per-repository assessment: layout, manifest state, identity coherence, CI levels, defects found (two version-coherence defects: a README status drift and a missing version anchor).
+- [`phase-2/migration-matrix.yaml`](phase-2/migration-matrix.yaml) — machine-readable matrix: gaps per repository, structure mappings M1–M5 (map, never rename), risk notes, and the nominated Phase 3 pull-request order (digital-transformation first as the AC-28 second implementation, then the remaining five).
+
+Findings are recorded per repository in the [portfolio conformance registry](../registry/conformance.yaml) (`phase2` fields, registry v1.1.0). Phase 3 adoption proceeds repository-by-repository against the nominated order; each pull request remains reviewable and attributable.
