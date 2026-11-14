@@ -22,7 +22,7 @@ The standard is organized in three governance layers:
 
 | Path | Role |
 |---|---|
-| [`standard.yaml`](standard.yaml) | Normative identity and version of the standard (currently **1.0.0**) |
+| [`standard.yaml`](standard.yaml) | Normative identity and version of the standard (currently **1.0.1**) |
 | [`specifications/`](specifications/) | Normative specifications: repository, README, metadata, documentation, conformance, governance |
 | [`schemas/`](schemas/) | Machine-readable schemas (standard declaration) |
 | [`validators/`](validators/) | Local validation utilities |
@@ -60,6 +60,8 @@ Conformance levels:
 | `registered` | Identified in the ecosystem registry, with a valid standard declaration and identity coherence |
 | `structural` | Meets the repository structure, metadata, version-coherence and documentation-baseline requirements |
 | `full` | Passes structural checks plus complete README, documentation and diagram requirements |
+
+Where established repository structure legitimately differs from the target layout, the declaration records explicit **structure mappings** (added in v1.0.1): a role such as `model-definition` is satisfied by mapped paths instead of its default location — recorded, reviewed and integrity-checked, never a rename (rule R1). See [repository standard §6](specifications/repository-standard.md).
 
 ## Reusable conformance workflow
 

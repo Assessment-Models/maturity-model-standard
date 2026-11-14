@@ -1,6 +1,6 @@
 # Repository Standard — Normative Specification
 
-**Standard:** AM-MODEL-REPOSITORY-STANDARD v1.0.0
+**Standard:** AM-MODEL-REPOSITORY-STANDARD v1.0.1
 **Authority:** [CR-AM-ORG-RES-000](../change-requests/CR-AM-ORG-RES-000.md)
 **Applies to:** every repository classified `maturity-model` under the Assessment-Models taxonomy
 
@@ -94,3 +94,14 @@ The existing federated repository layout is **more mature than this specificatio
 ## 5. Machine-readable authority
 
 Machine-readable model definitions (`model.yaml`, `maturity/`) are authoritative over explanatory documentation. Documentation MUST be consistent with those definitions; where automated consistency checking is feasible, CI MUST perform it. Documentation drift is a conformance failure, not a cosmetic issue.
+
+## 6. Structure mappings (added in v1.0.1)
+
+Some repositories carry **established structure that is more mature than the target layout** and must not be restructured (rule R1). Standard v1.0.1 lets a structural role be satisfied by explicitly recorded alternative paths, called a **structure mapping**.
+
+- A declaration MAY carry a `structure.mappings.<role>` block (metadata standard rule M8). v1 defines one role: `model-definition` (default path `maturity/model`).
+- A recorded mapping satisfies the role's required-path check **only if every mapped path exists** in the repository. Mapping integrity is CI-checked; the validator logs satisfied roles as `MAPPED:` lines.
+- A mapping records established structure; it is reviewed like any other declaration change. It never excuses missing baseline files and MUST NOT be used to bypass a gap that could be closed additively.
+- A broken mapping (missing path or unknown role) is a conformance failure: the validator does not fall back to the default path.
+
+Example: the composite model definition of [maturity-model-digital-transformation](https://github.com/Assessment-Models/maturity-model-digital-transformation) (`maturity/evaluation.yaml` + `maturity/components/`, CR-AM-10 components) satisfies `model-definition` via a recorded mapping instead of a `maturity/model/` directory (Phase 2 finding M2).

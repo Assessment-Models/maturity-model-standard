@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://github.com/Assessment-Models/maturity-model-standard/blob/main/schemas/standard-declaration.schema.json",
   "title": "AM-MODEL-REPOSITORY-STANDARD declaration (standard.yaml)",
-  "description": "Validates the repository-standard adoption declaration of an Assessment-Models maturity-model repository (CR-AM-ORG-RES-000). model.yaml remains the authoritative identity manifest; this declaration cross-references it and is CI-checked for coherence.",
+  "description": "Validates the repository-standard adoption declaration of an Assessment-Models maturity-model repository (CR-AM-ORG-RES-000). model.yaml remains the authoritative identity manifest; this declaration cross-references it and is CI-checked for coherence. Since standard v1.0.1, an optional structure block may record explicit structure mappings (rule R1: map, never rename).",
   "type": "object",
   "required": ["repository", "standard", "model"],
   "additionalProperties": false,
@@ -54,6 +54,38 @@
         "version": {
           "type": "string",
           "description": "Must equal model.yaml version and the VERSION file; cross-checked by CI."
+        }
+      }
+    },
+    "structure": {
+      "type": "object",
+      "required": ["mappings"],
+      "additionalProperties": false,
+      "description": "Optional (standard v1.0.1). Records explicit structure mappings: established alternative paths satisfying a structural role (rule R1: map, never rename). Mappings declare existing structure; they are reviewed like any declaration change and never excuse missing baseline files.",
+      "properties": {
+        "mappings": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "model-definition": {
+              "type": "object",
+              "required": ["paths"],
+              "additionalProperties": false,
+              "description": "The authoritative model definition role (default path: maturity/model).",
+              "properties": {
+                "paths": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": { "type": "string", "minLength": 1 },
+                  "description": "Established paths serving the role; each must exist (CI-checked)."
+                },
+                "note": {
+                  "type": "string",
+                  "description": "Why the structure differs (e.g. composite model definition)."
+                }
+              }
+            }
+          }
         }
       }
     }

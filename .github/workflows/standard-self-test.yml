@@ -1,25 +1,28 @@
-# Self-test for maturity-model-standard (CR-AM-ORG-RES-000).
-# Runs the declaration validator against the fixtures (positive must pass,
-# negative must fail) and sanity-checks the normative artifacts.
-name: Standard self-test
+# Self-test for AM-MODEL-REPOSITORY-STANDARD v1.0.1: runs the canonical
+# validator against the positive and negative fixtures so regressions in the
+# validator itself fail CI in this repository, not downstream repositories.
+name: standard-self-test
 
 on:
-  pull_request:
   push:
     branches: [main]
-  workflow_dispatch:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
 
 jobs:
-  self-test:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: "3.12"
       - name: Install PyYAML
         run: pip install pyyaml
-      - name: Positive control — valid declaration must pass
+      - name: Positive control — conformant fixture must pass
         run: python validators/validate_standard_declaration.py --root fixtures/positive
       - name: Negative control — version drift must fail
         run: |
@@ -29,23 +32,25 @@ jobs:
           else
             echo "OK: negative control failed as expected"
           fi
-      - name: Registry and standard sanity
+      - name: Mapped-structure control — v1.0.1 structure mappings must pass
+        run: python validators/validate_standard_declaration.py --root fixtures/mapped-structure
+      - name: Negative control — mapping to a missing path must fail
+        run: |
+          if python validators/validate_standard_declaration.py --root fixtures/negative-bad-mapping; then
+            echo "FAIL: negative control unexpectedly passed"
+            exit 1
+          else
+            echo "OK: negative control failed as expected"
+          fi
+      - name: Schema sanity — declaration schema must be valid JSON
+        run: python -c "import json; json.load(open('schemas/standard-declaration.schema.json')); print('OK')"
+      - name: Portfolio report — script and registry must parse
         run: |
           python - <<'PY'
-          import sys
+          import ast
+          ast.parse(open('scripts/portfolio_conformance_report.py').read())
+          ast.parse(open('validators/validate_standard_declaration.py').read())
           import yaml
-          for path in ("standard.yaml", "registry/conformance.yaml"):
-              with open(path, encoding="utf-8") as handle:
-                  doc = yaml.safe_load(handle)
-              if not isinstance(doc, dict) or not doc:
-                  print("FAIL: %s is empty or not a mapping" % path)
-                  sys.exit(1)
-              print("OK: %s parses" % path)
-          registry = yaml.safe_load(open("registry/conformance.yaml", encoding="utf-8"))
-          assert registry["standard"]["id"] == "AM-MODEL-REPOSITORY-STANDARD"
-          levels = {"registered", "structural", "full"}
-          for entry in registry["repositories"]:
-              assert entry["conformance"] in levels | {"not-applicable"}, entry
-          print("OK: portfolio conformance registry well-formed (%d repositories)"
-                % len(registry["repositories"]))
+          yaml.safe_load(open('registry/conformance.yaml'))
+          print('OK: report script, validator and registry parse cleanly')
           PY

@@ -1,0 +1,12 @@
+# Fixture identity manifest (CR-AM-11 section 15 contract handshake shape).
+id: maturity-model-fixture-mapped
+type: maturity-model
+name: Fixture Maturity Model (mapped)
+version: "1.0.0"
+status: stable
+description: >-
+  Fixture model exercising AM-MODEL-REPOSITORY-STANDARD v1.0.1 structure
+  mappings. Not a real assessment model; lives only in this standard's
+  fixtures and must not be registered in assessment-registry.
+maturity:
+  scale: dea:maturity-bands-v2@1.0.0

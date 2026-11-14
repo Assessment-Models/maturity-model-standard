@@ -1,0 +1,19 @@
+# Negative control fixture: the recorded structure mapping points at a path
+# that does not exist. The v1.0.1 validator must fail on mapping integrity,
+# and must not fall back to the default maturity/model path.
+repository:
+  type: maturity-model
+standard:
+  id: AM-MODEL-REPOSITORY-STANDARD
+  version: "1.0.1"
+  conformance: structural
+model:
+  id: maturity-model-fixture-mapped
+  name: Fixture Maturity Model (mapped)
+  version: "1.0.0"
+structure:
+  mappings:
+    model-definition:
+      paths:
+        - maturity/does-not-exist.yaml
+      note: Broken mapping on purpose — this fixture must fail validation.

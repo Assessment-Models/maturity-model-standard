@@ -1,0 +1,8 @@
+# Fixture placeholder workflow (structural conformance requires this path).
+name: contract-conformance
+on: [push, pull_request]
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "fixture placeholder"

@@ -14,11 +14,16 @@
 # repositories now declare the standard (AO structural; DTO/technology/
 # operations/modernization/services-delivery structural; DT registered pending
 # the structure-mappings amendment, maturity-model-standard#3). AC-20 met.
-version: 1.2.0
+# v1.3.0 (2026-11-14): standard v1.0.1 published (structure-mappings amendment,
+# maturity-model-standard#3) — schema, validator, specifications and fixtures
+# updated; portfolio-report staleness policy for patch versions is now
+# informational ("behind"). DT elevation PR opened; DT stays registered until
+# it merges (per-repo standard_version stays "1.0.0" until each repo bumps).
+version: 1.3.0
 updated: "2026-11-14"
 standard:
   id: AM-MODEL-REPOSITORY-STANDARD
-  version: "1.0.0"
+  version: "1.0.1"
 classifications:
   maturity-model: full maturity-model repository standard
   assessment-model: separate assessment-model standard (out of scope for standard v1.0.0)
@@ -50,8 +55,9 @@ repositories:
       Adopted at `registered` via maturity-model-digital-transformation#4
       (merged 2026-11-14): VERSION + README Status anchor added, CONTRIBUTING,
       declaration, conformance gate. Composite layout mapped, not restructured
-      (M2); raises to `structural` once the structure-mappings amendment lands
-      (maturity-model-standard#3).
+      (M2); raises to `structural` via recorded structure mappings now that standard
+      v1.0.1 has landed (maturity-model-standard#3); elevation PR opened
+      2026-11-14, DT remains `registered` until it merges.
     phase2:
       assessed: "2026-11-14"
       identity: version-anchor-missing
@@ -59,7 +65,7 @@ repositories:
       gaps_closed: [standard-declaration, repository-standard-gate, version-file, readme-status, contributing]
       structure_mappings: [M2, M3]
       target_conformance: structural
-      blocking: maturity-model-standard#3 (structure mappings)
+      blocking: none (amendment landed in standard v1.0.1); elevation PR pending merge
   - repository: maturity-model-digital-transformation-operationalized
     classification: maturity-model
     standard_version: "1.0.0"
@@ -176,7 +182,7 @@ repositories:
     notes: Organization defaults and policy (CR-AM-11 Phase 0).
   - repository: maturity-model-standard
     classification: org-governance
-    standard_version: "1.0.0"
+    standard_version: "1.0.1"
     conformance: not-applicable
     notes: The standard itself (this repository).
   - repository: maturity-model-template

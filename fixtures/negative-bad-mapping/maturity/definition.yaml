@@ -1,0 +1,6 @@
+# Fixture model definition (mapped path serving the model-definition role).
+id: fixture-definition
+name: Fixture definition
+dimensions:
+  - id: fixture-dimension
+    name: Fixture dimension

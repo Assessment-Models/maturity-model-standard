@@ -2,10 +2,16 @@
 """Validate a repository's AM-MODEL-REPOSITORY-STANDARD declaration (standard.yaml).
 
 Established by CR-AM-ORG-RES-000 (Assessment-Models organization resolution).
+Implements the standard at v1.0.1 (amendment issue #3: structure mappings).
 The root model.yaml manifest (CR-AM-11 section 15 contract handshake) remains the
 authoritative identity source; this validator cross-checks the repository-standard
 declaration against model.yaml, VERSION and the README status line, and verifies
 repository structure by declared conformance level.
+
+Since v1.0.1, a declaration may record explicit structure mappings
+(`structure.mappings.<role>`) for established alternative paths. A recorded
+mapping for a role satisfies that role's required path check, provided every
+mapped path exists. Rule R1: map, never rename.
 
 Usage:
     python validate_standard_declaration.py --root <repository root>
@@ -29,16 +35,24 @@ STANDARD_ID = "AM-MODEL-REPOSITORY-STANDARD"
 SEMVER = r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z.-]+)?$"
 CONFORMANCE_LEVELS = {"registered": 0, "structural": 1, "full": 2}
 
+# v1.0.1: structural roles that may be satisfied by a recorded structure mapping
+# instead of their default path (rule R1: map, never rename).
+ROLE_PATHS = {
+    "model-definition": ["maturity/model"],
+}
+
 REQUIRED_PATHS_STRUCTURAL = [
     "README.md",
+    # NOTE: role paths (see ROLE_PATHS) stay in this list; a recorded,
+    # integrity-checked structure mapping satisfies them (v1.0.1).
     "standard.yaml",
     "model.yaml",
     "VERSION",
     "CHANGELOG.md",
     "LICENSE",
     "CONTRIBUTING.md",
-    "maturity/scale.yaml",
     "maturity/model",
+    "maturity/scale.yaml",
     "examples",
     "scripts",
     ".github/workflows/local-model-ci.yml",
@@ -81,6 +95,27 @@ def load_yaml(path, violations, label):
     except yaml.YAMLError as exc:
         violations.append("%s does not parse: %s" % (label, exc))
         return None
+
+
+def collect_mappings(declaration, root, violations):
+    """Parse and integrity-check structure.mappings; return satisfied role paths."""
+    structure = declaration.get("structure") or {}
+    mappings = structure.get("mappings") or {} if isinstance(structure, dict) else {}
+    satisfied = set()
+    for role, spec in (mappings or {}).items():
+        if role not in ROLE_PATHS:
+            violations.append("structure.mappings: unknown role %r (known roles: %s)."
+                              % (role, sorted(ROLE_PATHS)))
+            continue
+        if not isinstance(spec, dict) or not isinstance(spec.get("paths"), list) or not spec.get("paths"):
+            violations.append("structure.mappings.%s: requires a non-empty 'paths' list." % role)
+            continue
+        for mapped in spec["paths"]:
+            if not os.path.exists(os.path.join(root, str(mapped))):
+                violations.append("structure.mappings.%s: mapped path missing: %s"
+                                  % (role, mapped))
+        satisfied.update(ROLE_PATHS[role])
+    return satisfied
 
 
 def main():
@@ -149,11 +184,19 @@ def main():
                           "Documentation must not drift from the authoritative manifest."
                           % (readme_version, model.get("version")))
 
-    # --- Structure checks by declared level ---
+    # --- Structure checks by declared level (v1.0.1: recorded mappings satisfy roles) ---
+    mapped_role_paths = collect_mappings(declaration, root, violations) if level >= 1 else set()
     required = list(REQUIRED_PATHS_STRUCTURAL) if level >= 1 else []
     if level >= 2:
         required += REQUIRED_PATHS_FULL
+    mapped_logged = []
     for rel in required:
+        if rel in mapped_role_paths:
+            role = next(r for r, paths in ROLE_PATHS.items() if rel in paths)
+            mapping = ((declaration.get("structure") or {}).get("mappings") or {}).get(role) or {}
+            mapped_logged.append("role '%s' (%s) satisfied via mapped paths: %s"
+                                 % (role, rel, ", ".join(str(p) for p in mapping.get("paths") or [])))
+            continue
         if not os.path.exists(os.path.join(root, rel)):
             violations.append("%s conformance: required path missing: %s"
                               % (conformance, rel))
@@ -165,6 +208,8 @@ def main():
 
     print("OK: %s conforms to %s v%s at conformance level '%s'."
           % (root, STANDARD_ID, declared_version, conformance))
+    for line in mapped_logged:
+        print("MAPPED: %s" % line)
     return 0
 
 

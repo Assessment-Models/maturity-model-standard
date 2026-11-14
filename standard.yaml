@@ -4,7 +4,7 @@
 # standard.yaml declaration, never by editing this file.
 id: AM-MODEL-REPOSITORY-STANDARD
 name: Assessment-Models Maturity Model Repository Standard
-version: 1.0.0
+version: 1.0.1
 status: stable
 governing_organization: Assessment-Models
 established_by: CR-AM-ORG-RES-000
@@ -22,6 +22,14 @@ conformance_levels:
   - registered
   - structural
   - full
+amendments:
+  - version: 1.0.1
+    established_by: maturity-model-standard#3 (structure mappings, Phase 2 finding M2)
+    summary: >-
+      Optional structure.mappings block in the declaration records established
+      alternative paths for a structural role (v1 role: model-definition);
+      the validator honours recorded mappings (rule R1: map, never rename).
+      Additive and backward-compatible.
 artifacts:
   specifications: specifications/
   schemas: schemas/

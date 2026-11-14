@@ -1,0 +1,20 @@
+# Positive control fixture: structural conformance satisfied via a recorded
+# v1.0.1 structure mapping (rule R1: map, never rename). The model definition
+# role (default path maturity/model) is served by established mapped paths.
+repository:
+  type: maturity-model
+standard:
+  id: AM-MODEL-REPOSITORY-STANDARD
+  version: "1.0.1"
+  conformance: structural
+model:
+  id: maturity-model-fixture-mapped
+  name: Fixture Maturity Model (mapped)
+  version: "1.0.0"
+structure:
+  mappings:
+    model-definition:
+      paths:
+        - maturity/definition.yaml
+        - maturity/components/
+      note: Fixture control for v1.0.1 structure mappings (issue #3, finding M2 pattern).

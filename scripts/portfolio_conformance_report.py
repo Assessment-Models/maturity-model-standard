@@ -11,7 +11,10 @@ Continuous drift detection for the Assessment-Models maturity-model portfolio:
 4. Compares each repository's declared standard version against this
    repository's published VERSION (staleness tracking, AC-29).
 5. Writes a Markdown portfolio report (stdout and $GITHUB_STEP_SUMMARY) and
-   exits non-zero on any drift or stale declaration.
+   exits non-zero on any drift or on a stale declaration (major/minor lag).
+   Since standard v1.0.1, a declared version that is only a patch behind the
+   published standard is reported as informational ("behind"), per the
+   compatible-patch adoption policy; a major/minor lag remains a failure.
 
 Policy enforcement stays central (this scheduled check); content propagation
 stays per-repository (reviewable PRs). This script never modifies repositories.
@@ -53,6 +56,26 @@ def declared_standard_version(clone_dir):
     return str(((data.get("standard") or {}).get("version")) or "")
 
 
+def version_lag(declared, published):
+    """Compare a declared standard version with the published one.
+
+    'ok'           - identical
+    'behind-patch' - same major.minor, older patch (informational, v1.0.1)
+    'stale'        - major/minor mismatch (failure)
+    'missing'      - no declaration found
+    """
+    if not declared:
+        return "missing"
+    if declared == published:
+        return "ok"
+
+    def major_minor(v):
+        parts = str(v).split(".")
+        return tuple(parts[:2]) if len(parts) >= 2 else None
+
+    return "behind-patch" if major_minor(declared) == major_minor(published) else "stale"
+
+
 def main():
     published = read_published_standard_version()
     with open(REGISTRY_PATH, encoding="utf-8") as handle:
@@ -82,14 +105,21 @@ def main():
                 continue
             ok, detail = run_validator(clone_dir)
             declared = declared_standard_version(clone_dir)
-            stale = bool(declared) and declared != published
-            status = "ok" if (ok and not stale) else "FAIL"
+            lag = version_lag(declared, published)
+            status = "ok" if ok else "FAIL"
             if not ok:
                 failures.append("%s: %s" % (repo, detail))
-            if stale:
+            if lag == "stale":
+                status = "FAIL"
                 failures.append(
-                    "%s: declares standard v%s but the published standard is v%s"
+                    "%s: declares standard v%s but the published standard is v%s "
+                    "(major/minor lag; compatible upgrade required)"
                     % (repo, declared, published))
+            elif lag == "behind-patch":
+                # v1.0.1 policy: a published patch version older than the
+                # current standard is compatible and informational.
+                if ok:
+                    status = "ok (patch behind)"
             rows.append((repo, entry.get("conformance"), declared or "?", status))
     finally:
         shutil.rmtree(workdir, ignore_errors=True)

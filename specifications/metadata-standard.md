@@ -1,6 +1,6 @@
 # Metadata Standard — The `standard.yaml` Declaration
 
-**Standard:** AM-MODEL-REPOSITORY-STANDARD v1.0.0
+**Standard:** AM-MODEL-REPOSITORY-STANDARD v1.0.1
 **Authority:** [CR-AM-ORG-RES-000](../change-requests/CR-AM-ORG-RES-000.md)
 **Schema:** [`schemas/standard-declaration.schema.json`](../schemas/standard-declaration.schema.json)
 
@@ -23,6 +23,18 @@ model:
   version: "<must equal model.yaml version and VERSION>"
 ```
 
+Since v1.0.1, a declaration MAY additionally record explicit structure mappings (see the [repository standard](repository-standard.md) §6):
+
+```yaml
+structure:
+  mappings:
+    model-definition:            # structural role (default path: maturity/model)
+      paths:                      # established paths serving the role; each must exist
+        - maturity/evaluation.yaml
+        - maturity/components/
+      note: why the structure differs (e.g. composite model definition)
+```
+
 ## 3. Normative rules
 
 - **M1.** `repository.type` MUST equal the `type` declared in `model.yaml` and MUST be `maturity-model` for this standard. Repositories of other classes MUST NOT declare maturity-model conformance.
@@ -32,6 +44,7 @@ model:
 - **M5.** The declaration MUST NOT restate the contract handshake, dependencies, compatibility or any other manifest content. It binds the repository to the repository standard, nothing else.
 - **M6.** Version coherence is CI-enforced: `standard.yaml` model version, `model.yaml` version, `VERSION` file and the README status line MUST all agree.
 - **M7.** A repository whose `standard.yaml` is missing is treated as not-declared; it is tracked as `registered` in the portfolio conformance registry and listed for adoption.
+- **M8.** (added in v1.0.1) A declaration MAY carry a `structure.mappings.<role>` block recording established alternative paths for a structural role. A mapping satisfies the role's required path **only when every mapped path exists** (CI-checked and logged as `MAPPED:`); unknown roles or missing mapped paths are conformance failures, and the validator does not fall back to the default path.
 
 ## 4. Why a separate file, not manifest fields
 
