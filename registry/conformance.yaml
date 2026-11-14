@@ -25,7 +25,13 @@
 # maturity-model repositories are at `structural` (AC-20 final state). The
 # other 6 stay at declared v1.0.0 (patch-behind, informational per the v1.0.1
 # policy) until they bump in their own reviewed PRs.
-version: 1.4.0
+# v1.5.0 (2026-11-14): v1.0.1 propagation complete — the six remaining
+# maturity-model repositories and the template merged their patch-bump PRs
+# (autonomous-operations#2, digital-transformation-operationalized#3,
+# technology#3, operations#4, modernization#3, services-delivery#3,
+# template#1). Every maturity-model repository now declares standard v1.0.1;
+# the portfolio is fully current (AC-29 has nothing stale to report).
+version: 1.5.0
 updated: "2026-11-14"
 standard:
   id: AM-MODEL-REPOSITORY-STANDARD
@@ -40,7 +46,7 @@ classifications:
 repositories:
   - repository: maturity-model-autonomous-operations
     classification: maturity-model
-    standard_version: "1.0.0"
+    standard_version: "1.0.1"
     conformance: structural
     notes: >-
       Reference implementation (CR-AM-ORG-RES-000 §12). Declaration, version-drift
@@ -74,7 +80,7 @@ repositories:
       achieved: "2026-11-14" (PR #5; recorded model-definition mapping, integrity-checked)
   - repository: maturity-model-digital-transformation-operationalized
     classification: maturity-model
-    standard_version: "1.0.0"
+    standard_version: "1.0.1"
     conformance: structural
     notes: >-
       Adopted at `structural` via
@@ -89,7 +95,7 @@ repositories:
       structure_mappings: [M1, M4, M5]
   - repository: maturity-model-technology
     classification: maturity-model
-    standard_version: "1.0.0"
+    standard_version: "1.0.1"
     conformance: structural
     notes: >-
       Adopted at `structural` via maturity-model-technology#2 (merged 2026-11-14).
@@ -100,7 +106,7 @@ repositories:
       structure_mappings: [M1, M5]
   - repository: maturity-model-operations
     classification: maturity-model
-    standard_version: "1.0.0"
+    standard_version: "1.0.1"
     conformance: structural
     notes: >-
       Adopted at `structural` via maturity-model-operations#3 (merged 2026-11-14).
@@ -112,7 +118,7 @@ repositories:
       structure_mappings: [M1, M5]
   - repository: maturity-model-modernization
     classification: maturity-model
-    standard_version: "1.0.0"
+    standard_version: "1.0.1"
     conformance: structural
     notes: >-
       Adopted at `structural` via maturity-model-modernization#2 (merged
@@ -124,7 +130,7 @@ repositories:
       structure_mappings: [M1, M5]
   - repository: maturity-model-services-delivery
     classification: maturity-model
-    standard_version: "1.0.0"
+    standard_version: "1.0.1"
     conformance: structural
     notes: >-
       Adopted at `structural` via maturity-model-services-delivery#2 (merged
@@ -193,6 +199,6 @@ repositories:
     notes: The standard itself (this repository).
   - repository: maturity-model-template
     classification: org-governance
-    standard_version: "1.0.0"
+    standard_version: "1.0.1"
     conformance: not-applicable
     notes: Repository template authority implementing this standard.
