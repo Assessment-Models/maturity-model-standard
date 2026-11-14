@@ -1,0 +1,33 @@
+# Portfolio drift detection — CR-AM-ORG-RES-000 Phase 4 (AC-26, AC-29).
+#
+# Continuously enforces the repository standard across the portfolio:
+# - re-runs the declaration validator against every adopted repository
+#   (documentation/version drift, the defect class found twice in Phase 2)
+# - tracks each repository's declared standard version against the published one
+#
+# Policy enforcement is central (this scheduled check, owned by the standard);
+# content propagation stays per-repository (reviewable PRs). This workflow
+# never modifies repositories. On failure, the workflow run itself is the
+# alert; triage follows the governance standard §3 cascade.
+name: Portfolio drift detection
+
+on:
+  schedule:
+    - cron: "0 3 * * 1" # weekly, Monday 03:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  portfolio-conformance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install PyYAML
+        run: pip install pyyaml
+      - name: Portfolio conformance report
+        run: python scripts/portfolio_conformance_report.py
