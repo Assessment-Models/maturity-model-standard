@@ -1,0 +1,127 @@
+# Portfolio conformance registry — AM-MODEL-REPOSITORY-STANDARD (CR-AM-ORG-RES-000 §5).
+#
+# Records repository classification and repository-standard adoption across
+# Assessment-Models. Reconciliation note: the registration records in
+# Assessment-Models/assessment-registry remain the identity spine (id, release,
+# contract handshake, immutable references); this registry records
+# repository-standard adoption only, joined by repository identity. The intended
+# long-term home for these fields is the assessment-registry registration schema
+# (tracked as a reconciliation issue); until that lands, this file is the
+# source of truth for standard adoption.
+version: 1.0.0
+updated: "2026-11-14"
+standard:
+  id: AM-MODEL-REPOSITORY-STANDARD
+  version: "1.0.0"
+classifications:
+  maturity-model: full maturity-model repository standard
+  assessment-model: separate assessment-model standard (out of scope for standard v1.0.0)
+  shared-infrastructure: reusable engineering standards (excluded)
+  registry-catalog: registry and catalogue architecture (excluded)
+  legacy-frozen: frozen/superseded under CR-AM-01 Release 1 D-1 (excluded)
+  org-governance: organization defaults, CI, registry, standard and template (excluded)
+repositories:
+  - repository: maturity-model-autonomous-operations
+    classification: maturity-model
+    standard_version: "1.0.0"
+    conformance: structural
+    notes: >-
+      Reference implementation (CR-AM-ORG-RES-000 §12). Declaration, version-drift
+      fix and reusable conformance workflow adopted via
+      maturity-model-autonomous-operations#1 (merged 2026-11-14).
+  - repository: maturity-model-digital-transformation
+    classification: maturity-model
+    standard_version: null
+    conformance: registered
+    notes: >-
+      First-model candidate under CR-AM-11 §31 with a full Level 1/2/3 CI pedigree
+      (existing work more mature in CI demonstration than the plan required).
+      Nominated as the second, materially different implementation for AC-28
+      (adoption issue maturity-model-digital-transformation#3).
+  - repository: maturity-model-digital-transformation-operationalized
+    classification: maturity-model
+    standard_version: null
+    conformance: registered
+    notes: Awaiting adoption pull request (issue #1).
+  - repository: maturity-model-technology
+    classification: maturity-model
+    standard_version: null
+    conformance: registered
+    notes: Awaiting adoption pull request (issue #1).
+  - repository: maturity-model-operations
+    classification: maturity-model
+    standard_version: null
+    conformance: registered
+    notes: Awaiting adoption pull request (issue #2).
+  - repository: maturity-model-modernization
+    classification: maturity-model
+    standard_version: null
+    conformance: registered
+    notes: Awaiting adoption pull request (issue #1).
+  - repository: maturity-model-services-delivery
+    classification: maturity-model
+    standard_version: null
+    conformance: registered
+    notes: Awaiting adoption pull request (issue #1).
+  - repository: dea-assessment-modernization
+    classification: assessment-model
+    standard_version: null
+    conformance: not-applicable
+    notes: >-
+      Legacy-named active assessment model (GOVERNANCE.md legacy exception).
+      A separate assessment-model standard applies when defined.
+  - repository: dea-assessment-technology
+    classification: assessment-model
+    standard_version: null
+    conformance: not-applicable
+    notes: Legacy-named active assessment model; separate assessment-model standard.
+  - repository: dea-assessment-operations
+    classification: assessment-model
+    standard_version: null
+    conformance: not-applicable
+    notes: Legacy-named active assessment model; separate assessment-model standard.
+  - repository: dea-assessment-services-delivery
+    classification: assessment-model
+    standard_version: null
+    conformance: not-applicable
+    notes: Legacy-named active assessment model; separate assessment-model standard.
+  - repository: dea-catalog-maturity-models
+    classification: legacy-frozen
+    standard_version: null
+    conformance: not-applicable
+    notes: Frozen as legacy per CR-AM-01 Release 1 D-1; supersession declared via CR-AR-05.
+  - repository: dea-catalog-assessment-tools
+    classification: legacy-frozen
+    standard_version: null
+    conformance: not-applicable
+    notes: Legacy umbrella; index demoted to a registry view.
+  - repository: maturity-components
+    classification: shared-infrastructure
+    standard_version: null
+    conformance: not-applicable
+    notes: Reusable component packages (CR-AM-06); engineering standards treatment.
+  - repository: assessment-registry
+    classification: org-governance
+    standard_version: null
+    conformance: not-applicable
+    notes: Ecosystem integration spine (CR-AM-11 Phase 1).
+  - repository: assessment-ci
+    classification: org-governance
+    standard_version: null
+    conformance: not-applicable
+    notes: Three-level CI machinery (CR-AM-11 §13/§14).
+  - repository: .github
+    classification: org-governance
+    standard_version: null
+    conformance: not-applicable
+    notes: Organization defaults and policy (CR-AM-11 Phase 0).
+  - repository: maturity-model-standard
+    classification: org-governance
+    standard_version: "1.0.0"
+    conformance: not-applicable
+    notes: The standard itself (this repository).
+  - repository: maturity-model-template
+    classification: org-governance
+    standard_version: "1.0.0"
+    conformance: not-applicable
+    notes: Repository template authority implementing this standard.

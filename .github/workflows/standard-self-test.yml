@@ -1,0 +1,51 @@
+# Self-test for maturity-model-standard (CR-AM-ORG-RES-000).
+# Runs the declaration validator against the fixtures (positive must pass,
+# negative must fail) and sanity-checks the normative artifacts.
+name: Standard self-test
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  self-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install PyYAML
+        run: pip install pyyaml
+      - name: Positive control — valid declaration must pass
+        run: python validators/validate_standard_declaration.py --root fixtures/positive
+      - name: Negative control — version drift must fail
+        run: |
+          if python validators/validate_standard_declaration.py --root fixtures/negative-version-drift; then
+            echo "FAIL: negative control unexpectedly passed"
+            exit 1
+          else
+            echo "OK: negative control failed as expected"
+          fi
+      - name: Registry and standard sanity
+        run: |
+          python - <<'PY'
+          import sys
+          import yaml
+          for path in ("standard.yaml", "registry/conformance.yaml"):
+              with open(path, encoding="utf-8") as handle:
+                  doc = yaml.safe_load(handle)
+              if not isinstance(doc, dict) or not doc:
+                  print("FAIL: %s is empty or not a mapping" % path)
+                  sys.exit(1)
+              print("OK: %s parses" % path)
+          registry = yaml.safe_load(open("registry/conformance.yaml", encoding="utf-8"))
+          assert registry["standard"]["id"] == "AM-MODEL-REPOSITORY-STANDARD"
+          levels = {"registered", "structural", "full"}
+          for entry in registry["repositories"]:
+              assert entry["conformance"] in levels | {"not-applicable"}, entry
+          print("OK: portfolio conformance registry well-formed (%d repositories)"
+                % len(registry["repositories"]))
+          PY

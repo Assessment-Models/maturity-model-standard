@@ -1,0 +1,10 @@
+repository:
+  type: maturity-model
+standard:
+  id: AM-MODEL-REPOSITORY-STANDARD
+  version: "1.0.0"
+  conformance: registered
+model:
+  id: maturity-model-fixture
+  name: Fixture Maturity Model
+  version: "1.0.0"

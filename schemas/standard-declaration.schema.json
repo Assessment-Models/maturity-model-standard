@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/Assessment-Models/maturity-model-standard/blob/main/schemas/standard-declaration.schema.json",
+  "title": "AM-MODEL-REPOSITORY-STANDARD declaration (standard.yaml)",
+  "description": "Validates the repository-standard adoption declaration of an Assessment-Models maturity-model repository (CR-AM-ORG-RES-000). model.yaml remains the authoritative identity manifest; this declaration cross-references it and is CI-checked for coherence.",
+  "type": "object",
+  "required": ["repository", "standard", "model"],
+  "additionalProperties": false,
+  "properties": {
+    "repository": {
+      "type": "object",
+      "required": ["type"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["maturity-model"],
+          "description": "Must equal model.yaml type. Only maturity-model repositories adopt this standard."
+        }
+      }
+    },
+    "standard": {
+      "type": "object",
+      "required": ["id", "version", "conformance"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "const": "AM-MODEL-REPOSITORY-STANDARD"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z.-]+)?$",
+          "description": "Published SemVer version of the standard this repository conforms to."
+        },
+        "conformance": {
+          "type": "string",
+          "enum": ["registered", "structural", "full"]
+        }
+      }
+    },
+    "model": {
+      "type": "object",
+      "required": ["id", "name", "version"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Must equal model.yaml id."
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable model name; must equal model.yaml name."
+        },
+        "version": {
+          "type": "string",
+          "description": "Must equal model.yaml version and the VERSION file; cross-checked by CI."
+        }
+      }
+    }
+  }
+}

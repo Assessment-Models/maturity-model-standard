@@ -1,0 +1,5 @@
+id: maturity-model-fixture
+type: maturity-model
+name: Fixture Maturity Model
+description: Negative fixture: declaration model.version drifts from model.yaml/VERSION/README.
+version: "1.0.0"

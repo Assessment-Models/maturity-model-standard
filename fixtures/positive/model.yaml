@@ -1,0 +1,5 @@
+id: maturity-model-fixture
+type: maturity-model
+name: Fixture Maturity Model
+description: Positive fixture for the repository-standard conformance validator.
+version: "1.0.0"

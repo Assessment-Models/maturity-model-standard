@@ -1,0 +1,32 @@
+# Normative identity of the Assessment-Models maturity-model repository
+# standard (CR-AM-ORG-RES-000). This file is the version anchor for the
+# standard itself — repositories declare adoption via their own root
+# standard.yaml declaration, never by editing this file.
+id: AM-MODEL-REPOSITORY-STANDARD
+name: Assessment-Models Maturity Model Repository Standard
+version: 1.0.0
+status: stable
+governing_organization: Assessment-Models
+established_by: CR-AM-ORG-RES-000
+umbrella: CR-AM-01 (OpenDEA Assessment Metamodel Evolution)
+builds_on: CR-AM-11 (Federated Assessment Model Ecosystem)
+canonical_contracts:
+  source: technehub-labs/dea-metamodel
+  note: >-
+    The canonical assessment metamodel and its published contracts remain the
+    authority for maturity semantics (scales, bands, scoring, evidence,
+    conformance). This standard governs repository architecture, documentation
+    and repository-level conformance only. It references and implements those
+    contracts; it never redefines them.
+conformance_levels:
+  - registered
+  - structural
+  - full
+artifacts:
+  specifications: specifications/
+  schemas: schemas/
+  validators: validators/
+  reusable_workflow: .github/workflows/repository-conformance.yml
+  portfolio_registry: registry/conformance.yaml
+  template_repository: Assessment-Models/maturity-model-template
+  migration_method: migrations/
