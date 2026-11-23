@@ -95,6 +95,7 @@ def check_current_declaration(clone_dir, repository, snapshot):
         ("standard.version", declared, snapshot["version"]),
         ("standard.conformance", standard.get("conformance"), snapshot["conformance"]),
         ("model.id", model.get("id"), snapshot["asset_id"]),
+        ("model.version", str(model.get("version") or ""), snapshot["release_version"]),
     ]
     errors = []
     for field, actual, expected in checks:
