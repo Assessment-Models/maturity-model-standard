@@ -27,7 +27,7 @@ The standard is organized in three governance layers:
 | [`schemas/`](schemas/) | Machine-readable schemas (standard declaration) |
 | [`validators/`](validators/) | Local validation utilities |
 | [`.github/workflows/repository-conformance.yml`](.github/workflows/repository-conformance.yml) | **Reusable** `workflow_call` workflow every conformant repository can call |
-| [`registry/conformance.yaml`](registry/conformance.yaml) | Portfolio conformance registry (classification + standard-version + conformance level) |
+| [`registry/conformance.yaml`](registry/conformance.yaml) | Portfolio view: repository classification, Phase 2 assessments and structure mappings; adoption fields for registered maturity-model repositories are projected from `assessment-registry` (CR-AR-07) |
 | [`templates/`](templates/) | Pointers to the scaffold (implemented in [`maturity-model-template`](https://github.com/Assessment-Models/maturity-model-template)) |
 | [`migrations/`](migrations/) | Controlled propagation and migration method |
 | [`examples/`](examples/) | Example declarations and artifacts |
@@ -41,7 +41,7 @@ This standard **composes with** the machinery CR-AM-11 already delivered. It doe
 | Existing capability (more mature than the plan) | Reconciliation |
 |---|---|
 | `model.yaml` contract handshake (CR-AM-11 §15/§22), validated by `assessment-ci` | **Remains the authoritative identity manifest.** The new `standard.yaml` declaration binds a repository to the repository standard and is cross-checked against `model.yaml`, `VERSION` and the README status line — it never restates contract handshakes |
-| `assessment-registry` — registration records, immutable refs, manifest coherence | **Remains the identity spine.** The portfolio conformance registry records repository-standard adoption only; the intended long-term home for these fields is the registration schema (tracked as a reconciliation issue) |
+| `assessment-registry` — registration records, immutable refs, manifest coherence and per-model repository-standard adoption snapshots | **Authoritative adoption snapshot for each registered maturity-model repository.** `maturity-model-standard` remains normative for the standard; its portfolio registry retains classification and Phase 2 assessment metadata, with adoption fields maintained as a derived view (CR-AR-07). |
 | Three-level CI (local, contract, ecosystem) in `assessment-ci` + `assessment-registry` | **Unchanged.** Repository-standard conformance is an additional, additive gate delivered as a reusable workflow; Levels 1–3 remain independently identifiable |
 | Repository taxonomy, naming and legacy classification in [`.github/GOVERNANCE.md`](https://github.com/Assessment-Models/.github/blob/main/GOVERNANCE.md) | **Extended, not replaced.** Classification (maturity-model vs assessment-model vs shared infrastructure vs legacy) is performed *before* any restructuring; legacy naming exceptions and frozen repositories are respected |
 | Canonical metamodel and contracts in [`technehub-labs/dea-metamodel`](https://github.com/technehub-labs/dea-metamodel) | **Remain the semantic authority.** This standard governs repository architecture, documentation and conformance only |

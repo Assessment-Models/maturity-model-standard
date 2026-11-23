@@ -1,3 +1,10 @@
+## [1.6.0] - 2026-11-23
+
+### Changed
+- CR-AR-07: designate assessment-registry as the authoritative source for registered maturity-model repository-standard adoption snapshots.
+- Convert the seven maturity-model adoption fields in the portfolio conformance registry into a checked derived view; preserve repository classifications, Phase 2 assessments, structure mappings, achieved dates and notes.
+- Update the portfolio drift report to compare assessment-registry snapshots, the portfolio projection and current source repository declarations before running the standard conformance validator.
+
 # Changelog — maturity-model-standard
 
 Normative source for AM-MODEL-REPOSITORY-STANDARD. Versions follow the standard's own versioning policy (specifications/governance-standard.md §4).
