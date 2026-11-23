@@ -1,13 +1,14 @@
 # Portfolio conformance registry — AM-MODEL-REPOSITORY-STANDARD (CR-AM-ORG-RES-000 §5).
 #
-# Records repository classification and repository-standard adoption across
-# Assessment-Models. Reconciliation note: the registration records in
-# Assessment-Models/assessment-registry remain the identity spine (id, release,
-# contract handshake, immutable references); this registry records
-# repository-standard adoption only, joined by repository identity. The intended
-# long-term home for these fields is the assessment-registry registration schema
-# (tracked as a reconciliation issue); until that lands, this file is the
-# source of truth for standard adoption.
+# Records repository classification and Phase 2 structure assessments across
+# Assessment-Models. Under CR-AR-07, adoption snapshots for registered active
+# maturity-model repositories are projected from assessment-registry records.
+# assessment-registry is authoritative for each asset's adoption snapshot;
+# maturity-model-standard remains normative authority for the standard itself.
+# This file retains classification, Phase 2 assessment results, structure
+# mappings, achieved dates and explanatory notes. Adoption fields on the seven
+# registered maturity-model entries are a checked portfolio projection, not a
+# competing source of truth.
 #
 # v1.1.0 (2026-11-14): added phase2 structure-assessment fields (Phase 2).
 # v1.2.0 (2026-11-14): recorded Phase 3 adoptions — all 7 maturity-model
@@ -31,8 +32,12 @@
 # technology#3, operations#4, modernization#3, services-delivery#3,
 # template#1). Every maturity-model repository now declares standard v1.0.1;
 # the portfolio is fully current (AC-29 has nothing stale to report).
-version: 1.5.0
-updated: "2026-11-14"
+version: 1.6.0
+updated: "2026-11-23"
+# v1.6.0 (2026-11-23): CR-AR-07 — adoption fields for the seven active
+# maturity-model repositories are a derived projection of the authoritative
+# repository_standard snapshots in assessment-registry. Classification,
+# Phase 2 assessments, structure mappings and notes remain locally governed.
 standard:
   id: AM-MODEL-REPOSITORY-STANDARD
   version: "1.0.1"
