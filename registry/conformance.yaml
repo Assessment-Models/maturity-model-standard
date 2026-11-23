@@ -77,7 +77,7 @@ repositories:
       gaps_closed: [standard-declaration, repository-standard-gate, version-file, readme-status, contributing]
       structure_mappings: [M2, M3]
       target_conformance: structural
-      achieved: "2026-11-14" (PR #5; recorded model-definition mapping, integrity-checked)
+      achieved: "2026-11-14" # PR #5; recorded model-definition mapping, integrity-checked
   - repository: maturity-model-digital-transformation-operationalized
     classification: maturity-model
     standard_version: "1.0.1"
@@ -89,8 +89,9 @@ repositories:
     phase2:
       assessed: "2026-11-14"
       identity: drift
-      result: drift fixed by adoption PR #2; legacy self-named duplicate
-        directory retained untouched (M4), deduplication deferred to owner
+      result: >-
+        drift fixed by adoption PR #2; legacy self-named duplicate directory
+        retained untouched (M4), deduplication deferred to owner
       gaps_closed: [standard-declaration, repository-standard-gate, readme-status-drift]
       structure_mappings: [M1, M4, M5]
   - repository: maturity-model-technology
