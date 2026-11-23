@@ -18,7 +18,7 @@ import yaml
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 REGISTRY_PATH = os.path.join(ROOT, "registry", "conformance.yaml")
-VALIDATOR = os.path.join(HERE, "validate_standard_declaration.py")
+VALIDATOR = os.path.join(ROOT, "validators", "validate_standard_declaration.py")
 ORG = "Assessment-Models"
 ASSET_REGISTRY_URL = "https://github.com/Assessment-Models/assessment-registry.git"
 STANDARD_ID = "AM-MODEL-REPOSITORY-STANDARD"
